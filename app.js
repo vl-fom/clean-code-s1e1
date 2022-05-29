@@ -10,8 +10,8 @@
 
 var taskInput=document.getElementById("new-task");//Add a new task.
 var addButton=document.getElementsByTagName("button")[0];//first button
-var incompleteTaskHolder=document.querySelector("#incompleted-tasks");//ul of #incompletedTasks
-var completedTasksHolder=document.querySelector("#completed-tasks");//completed-tasks
+var incompleteTaskHolder=document.querySelector(".tasks_incompleted");//ul of #incompletedTasks
+var completedTasksHolder=document.querySelector(".tasks_completed");//completed-tasks
 
 
 //New task list item
@@ -33,12 +33,13 @@ var createNewTaskElement=function(taskString){
     var deleteButtonImg=document.createElement("img");//delete button image
 
     label.innerText=taskString;
-    label.className='task';
+    label.className='task__name task__label';
 
     //Each elements, needs appending
+    checkBox.className="task__check";
     checkBox.type="checkbox";
+    editInput.className="task__name task__input";
     editInput.type="text";
-    editInput.className="task";
 
     editButton.innerText="Edit"; //innerText encodes special characters, HTML does not.
     editButton.className="task__edit-button";
@@ -48,7 +49,7 @@ var createNewTaskElement=function(taskString){
     deleteButtonImg.src='./remove.svg';
     deleteButton.appendChild(deleteButtonImg);
 
-
+    listItem.className="task"
     //and appending.
     listItem.appendChild(checkBox);
     listItem.appendChild(label);
@@ -86,7 +87,7 @@ var editTask=function(){
     var editInput=listItem.querySelector('input[type=text]');
     var label=listItem.querySelector("label");
     var editBtn=listItem.querySelector(".task__edit-button");
-    var containsClass=listItem.classList.contains("editMode");
+    var containsClass=listItem.classList.contains("task_edit");
     //If class of the parent is .editmode
     if(containsClass){
 
@@ -100,7 +101,7 @@ var editTask=function(){
     }
 
     //toggle .editmode on the parent.
-    listItem.classList.toggle("editMode");
+    listItem.classList.toggle("task_edit");
 };
 
 
@@ -120,7 +121,7 @@ var deleteTask=function(){
 var taskCompleted=function(){
     console.log("Complete Task...");
 
-    //Append the task list item to the #completed-tasks
+    //Append the task list item to the .tasks_completed
     var listItem=this.parentNode;
     completedTasksHolder.appendChild(listItem);
     bindTaskEvents(listItem, taskIncomplete);
